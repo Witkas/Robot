@@ -1,25 +1,19 @@
 import gpiozero
 import cwiid
-import time
 import neopixels
 import os
-import distance_sensor
 from threading import Thread
+from distance_sensor import DistanceSensor
+from manouvers import backtrack
 
 # Hardware components of the project
 robot = gpiozero.Robot(left=(23,24), right=(27,22))
-sensor = distance_sensor.DistanceSensor(25,9)
+sensor = DistanceSensor(25,9)
 strip = neopixels.strip
 
 SPEED = 1  # robot speed [0-1]
 
-# Moves the robot back when a particular distance_threshold [cm] is reached.
-def backtrack():
-    robot.stop()
-    time.sleep(0.1)
-    robot.backward(SPEED)
-    time.sleep(0.5)
-    robot.stop()
+
 def play_sound_A():
     Thread(target=os.system, args=["mpg123 -q sounds/R2D2_Excited_2.mp3"]).start()
     neopixels.theaterChase(strip, neopixels.Color(0, 0, 255))
@@ -74,11 +68,11 @@ while True:
         if distance < 15: 
             red_wipe.start()
             sound_backtrack.start()
-            backtrack()
+            backtrack(robot, SPEED)
             # Reset the NeoPixels
             distance = sensor.get_distance() * 100 # distance from the sensor to the obstacle [cm]
             if distance > 15:
                 blue_wipe.start()
     except KeyboardInterrupt:
-        #neopixels.colorWipe(strip, neopixels.Color(0,0,0))
+        neopixels.colorWipe(strip, neopixels.Color(0,0,0))
         exit()
