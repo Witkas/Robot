@@ -3,7 +3,7 @@ import cwiid
 import neopixels
 from threading import Thread
 from distance_sensor import DistanceSensor
-from manouvers import backtrack
+from actions import go_back, action_A
 from sounds import happy_sound_1, happy_sound_2, angry_sound_1
 
 # Hardware components of the project
@@ -62,7 +62,7 @@ while True:
         if distance < 15: 
             red_wipe.start()
             angry_sound_1()
-            backtrack(robot, SPEED)
+            go_back(robot, SPEED)
             # Reset the NeoPixels
             distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
             if distance > 15:
