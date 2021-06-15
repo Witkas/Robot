@@ -13,7 +13,6 @@ strip = neopixels.strip
 
 SPEED = 1  # robot speed [0-1]
 
-
 def play_sound_A():
     Thread(target=os.system, args=["mpg123 -q sounds/R2D2_Excited_2.mp3"]).start()
     neopixels.theaterChase(strip, neopixels.Color(0, 0, 255))
@@ -40,10 +39,8 @@ wii.rpt_mode = cwiid.RPT_BTN
 
 while True:
     try:
-        distance = sensor.get_distance() * 100 # distance from the sensor to the obstacle [cm]
+        distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
         sound_backtrack = Thread(target=os.system, args=["mpg123 -q sounds/R2D2_Snappy.mp3"])
-        #sound_A = Thread(target=os.system, args=["mpg123 -q sounds/R2D2_Excited_2.mp3"])
-        t = Thread(target=neopixels.theaterChase, args=[strip, neopixels.Color(0, 0, 255)])
         blue_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(0, 0, 255)])
         red_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(255, 0, 0), 10])
         
@@ -59,10 +56,9 @@ while True:
             robot.backward(SPEED)
         if (buttons & cwiid.BTN_B):     # Press B
             robot.stop()
-        if (buttons & cwiid.BTN_A):
+        if (buttons & cwiid.BTN_A):     # Press A
             if not sound_A.is_alive():
                 sound_A.start()
-            #t.start()
 
         # Check the distance sensor
         if distance < 15: 
@@ -70,7 +66,7 @@ while True:
             sound_backtrack.start()
             backtrack(robot, SPEED)
             # Reset the NeoPixels
-            distance = sensor.get_distance() * 100 # distance from the sensor to the obstacle [cm]
+            distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
             if distance > 15:
                 blue_wipe.start()
     except KeyboardInterrupt:

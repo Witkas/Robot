@@ -6,7 +6,7 @@ class DistanceSensor:
         self.trigger = gpiozero.DigitalOutputDevice(TRIGGER)
         self.echo = gpiozero.DigitalInputDevice(ECHO)
         self.max_distance = max_distance
-    # Returns the distance from the sensor in meters.
+    # Returns the distance from the sensor in centimeters.
     def get_distance(self):
         # Trigger pulse
         self.trigger.on()
@@ -34,7 +34,7 @@ class DistanceSensor:
         if distance > self.max_distance:
             distance = self.max_distance
         distance = round(distance, 3)
-        return distance
+        return distance * 100 # [cm]
 
 
 
