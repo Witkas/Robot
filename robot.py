@@ -39,10 +39,6 @@ wii.rpt_mode = cwiid.RPT_BTN
 
 while True:
     try:
-        # sound_backtrack = Thread(target=os.system, args=["mpg123 -q sounds/R2D2_Snappy.mp3"])
-        blue_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(0, 0, 255)])
-        red_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(255, 0, 0), 10])
-        
         # Wiimote controls
         buttons = wii.state["buttons"]
         if (buttons & cwiid.BTN_LEFT):  # Press LEFT
@@ -61,6 +57,8 @@ while True:
 
         # Check the distance sensor
         distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
+        blue_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(0, 0, 255)])
+        red_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(255, 0, 0), 10])
         if distance < 15: 
             red_wipe.start()
             angry_sound_1()

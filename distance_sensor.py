@@ -35,6 +35,3 @@ class DistanceSensor:
             distance = self.max_distance
         distance = round(distance, 3)
         return distance * 100 # [cm]
-
-
-
