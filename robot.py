@@ -3,8 +3,8 @@ import cwiid
 import neopixels
 from threading import Thread
 from distance_sensor import DistanceSensor
-from actions import go_back, action_A
-from sounds import happy_sound_1, happy_sound_2, angry_sound_1
+from actions import go_back
+from sounds import play_sound
 
 # Hardware components of the project
 robot = gpiozero.Robot(left=(23,24), right=(27,22))
@@ -14,7 +14,7 @@ strip = neopixels.strip
 SPEED = 1  # robot speed [0-1]
 
 def play_sound_A():
-    happy_sound_2()
+    play_sound("R2D2_Excited_2.mp3")
     neopixels.theaterChase(strip, neopixels.Color(0, 0, 255))
     # Reset the Thread
     neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
@@ -33,7 +33,7 @@ except RuntimeError:
     exit()
 print("Connection established.")
 neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
-happy_sound_1()
+play_sound("R2D2_Excited.mp3")
 # Turn on the reporting mode, which permits Python to read input from the Wiimote
 wii.rpt_mode = cwiid.RPT_BTN
 
@@ -61,7 +61,7 @@ while True:
         red_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(255, 0, 0), 10])
         if distance < 15: 
             red_wipe.start()
-            angry_sound_1()
+            play_sound("R2D2_Snappy.mp3")
             go_back(robot, SPEED)
             # Reset the NeoPixels
             distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
