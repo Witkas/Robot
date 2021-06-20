@@ -11,7 +11,8 @@ robot = gpiozero.Robot(left=(23,24), right=(27,22))
 sensor = DistanceSensor(25,9)
 strip = neopixels.strip
 
-SPEED = 1  # robot speed [0-1]
+SPEED = 1                   # robot speed [0-1]
+DISTANCE_THRESHOLD = 15     # distance from which the robot will back off from the obstacle [cm]
 
 # Making connection with the Wiimote
 print("Press and hold the 1+2 buttons on your Wiimote simultaneously.")
@@ -48,13 +49,13 @@ while True:
         distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
         blue_wipe = Thread(target=color_wipe, args=[0, 0, 255])
         red_wipe = Thread(target=color_wipe, args=[255, 0, 0, 10])
-        if distance < 15: 
+        if distance < DISTANCE_THRESHOLD: 
             red_wipe.start()
             play_sound("R2D2_Snappy.mp3")
             go_back(robot, SPEED)
             # Reset the NeoPixels
             distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
-            if distance > 15:
+            if distance > DISTANCE_THRESHOLD:
                 blue_wipe.start()
     except KeyboardInterrupt:
         color_wipe(0, 0, 0)
