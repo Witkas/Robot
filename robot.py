@@ -3,7 +3,7 @@ import cwiid
 import neopixels
 from threading import Thread
 from distance_sensor import DistanceSensor
-from actions import go_back, action_A
+from actions import go_back, action_A, color_wipe
 from sounds import play_sound
 
 # Hardware components of the project
@@ -15,14 +15,14 @@ SPEED = 1  # robot speed [0-1]
 
 # Making connection with the Wiimote
 print("Press and hold the 1+2 buttons on your Wiimote simultaneously.")
-neopixels.colorWipe(strip, neopixels.Color(0, 100, 60))
+color_wipe(0, 100, 60)
 try:    
     wii = cwiid.Wiimote()
 except RuntimeError:
-    neopixels.colorWipe(strip, neopixels.Color(0,0,0))
+    color_wipe(0, 0, 0)
     exit()
 print("Connection established.")
-neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
+color_wipe(0, 0, 255)
 play_sound("R2D2_Excited.mp3")
 # Turn on the reporting mode, which permits Python to read input from the Wiimote
 wii.rpt_mode = cwiid.RPT_BTN
@@ -57,5 +57,5 @@ while True:
             if distance > 15:
                 blue_wipe.start()
     except KeyboardInterrupt:
-        neopixels.colorWipe(strip, neopixels.Color(0,0,0))
+        color_wipe(0, 0, 0)
         exit()
