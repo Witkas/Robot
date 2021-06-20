@@ -26,7 +26,6 @@ def action_A():
         neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
         t_alive = False
 
-    global t_alive
     if t_alive:
         return
     else:
