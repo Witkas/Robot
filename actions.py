@@ -32,10 +32,10 @@ def action_A():
         Thread(target=inner).start()
     
 # NeoPixel color wipe with a given RGB color.
-def color_wipe(r, g, b):
-    neopixels.colorWipe(strip, neopixels.Color(r, g, b))
+def color_wipe(r, g, b, wait_ms=30):
+    neopixels.colorWipe(strip, neopixels.Color(r, g, b), wait_ms)
 
 
 # NeoPixel theater chase with a given RGB color.
-def theater_chase(r, g, b):
-    neopixels.theaterChase(strip, neopixels.Color(r, g, b))
+def theater_chase(r, g, b, wait_ms=100, iterations=5):
+    neopixels.theaterChase(strip, neopixels.Color(r, g, b), wait_ms, iterations)

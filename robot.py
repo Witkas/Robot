@@ -46,8 +46,8 @@ while True:
 
         # Check the distance sensor
         distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
-        blue_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(0, 0, 255)])
-        red_wipe = Thread(target=neopixels.colorWipe, args=[strip, neopixels.Color(255, 0, 0), 10])
+        blue_wipe = Thread(target=color_wipe, args=[0, 0, 255])
+        red_wipe = Thread(target=color_wipe, args=[255, 0, 0, 10])
         if distance < 15: 
             red_wipe.start()
             play_sound("R2D2_Snappy.mp3")
