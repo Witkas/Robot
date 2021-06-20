@@ -1,6 +1,5 @@
 import gpiozero
 import cwiid
-import neopixels
 from threading import Thread
 from distance_sensor import DistanceSensor
 from actions import go_back, action_A, color_wipe
@@ -9,7 +8,6 @@ from sounds import play_sound
 # Hardware components of the project
 robot = gpiozero.Robot(left=(23,24), right=(27,22))
 sensor = DistanceSensor(25,9)
-strip = neopixels.strip
 
 SPEED = 1                   # robot speed [0-1]
 DISTANCE_THRESHOLD = 15     # distance from which the robot will back off from the obstacle [cm]
