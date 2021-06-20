@@ -3,7 +3,7 @@ import cwiid
 import neopixels
 from threading import Thread
 from distance_sensor import DistanceSensor
-from actions import go_back
+from actions import go_back, action_A
 from sounds import play_sound
 
 # Hardware components of the project
@@ -12,18 +12,6 @@ sensor = DistanceSensor(25,9)
 strip = neopixels.strip
 
 SPEED = 1  # robot speed [0-1]
-
-# This happens when A button on the Wiimote is pressed
-# TODO: find a good way to encapsulate this function
-def action_A():
-    play_sound("R2D2_Excited_2.mp3")
-    neopixels.theaterChase(strip, neopixels.Color(0, 0, 255))
-    # Reset the Thread
-    neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
-    global press_A
-    press_A = Thread(target=action_A)
-
-press_A = Thread(target=action_A)
 
 # Making connection with the Wiimote
 print("Press and hold the 1+2 buttons on your Wiimote simultaneously.")
@@ -54,8 +42,7 @@ while True:
         if (buttons & cwiid.BTN_B):     # Press B
             robot.stop()
         if (buttons & cwiid.BTN_A):     # Press A
-            if not press_A.is_alive():
-                press_A.start()
+            action_A()
 
         # Check the distance sensor
         distance = sensor.get_distance() # distance from the sensor to the obstacle [cm]
