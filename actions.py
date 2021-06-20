@@ -22,7 +22,6 @@ def action_A():
         strip = neopixels.strip
         play_sound("R2D2_Excited_2.mp3")
         neopixels.theaterChase(strip, neopixels.Color(0, 0, 255))
-        # Reset the Thread
         neopixels.colorWipe(strip, neopixels.Color(0, 0, 255))
         t_alive = False
 
